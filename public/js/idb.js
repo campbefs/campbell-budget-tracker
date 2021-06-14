@@ -1,3 +1,5 @@
+// INDEXED_DB
+
 let db;
 
 const request = indexedDB.open('budget-tracker', 1);
@@ -23,6 +25,8 @@ request.onerror = function(event) {
 function saveRecord(record) {
   const transaction = db.transaction(['new_transaction'], 'readwrite');
 
+  console.log('save record: ', transaction);
+
   const transObjectStore = transaction.objectStore('new_transaction');
 
   transObjectStore.add(record);
@@ -34,7 +38,7 @@ function uploadTransaction() {
   const transObjectStore = transaction.objectStore('new_transaction');
 
   const getAll = transObjectStore.getAll();
-
+  console.log('getAll: ', getAll);
   getAll.onsuccess = function() {
     if (getAll.result.length > 0) {
 
@@ -55,7 +59,7 @@ function uploadTransaction() {
           const transaction = db.transaction(['new_transaction'], 'readwrite');
           const transObjectStore = transaction.objectStore('new_transaction');
           // clear all items in your store
-          transactionObjectStore.clear();
+          transObjectStore.clear();
         })
         .catch(err => {
           // set reference to redirect back here
